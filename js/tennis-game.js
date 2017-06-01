@@ -14,6 +14,12 @@ let ballYSpeed = 4;
 let PADDLE_WIDTH = 10;
 let PADDLE_HEIGHT = 100;
 
+// Player paddle
+let playerPaddleY = 250;
+
+// Comp paddle
+let compPaddleY = 250;
+
 window.onload = function() {
   canvas = document.getElementById('game');
   canvasContext = canvas.getContext('2d');
@@ -24,6 +30,8 @@ window.onload = function() {
     drawGame();
     gameMechanics()
   }, 1000/frameRate);
+
+  canvas.addEventListener('mousemove', playerPaddleFollowMouse);
 }
 
 function gameMechanics() {
@@ -56,10 +64,21 @@ function drawGame() {
   drawRect(ballX, ballY, 10, 10, 'rgb(51,255,0)');
 
   // Draw player paddle
-  drawRect(0, 250, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
+  drawRect(0, playerPaddleY, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
 
   // Draw comp paddle
   drawRect(canvas.width-10, 250, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
+}
+
+// Helper functions
+
+// Get mouse position relative to canvas size
+function playerPaddleFollowMouse(evt) {
+  let rect = canvas.getBoundingClientRect();
+  let root = document.documentElement;
+
+  // Calculate paddle position based on mouse relative to canvas
+  playerPaddleY = evt.clientY - rect.top - root.scrollTop - PADDLE_HEIGHT/2;
 }
 
 function drawRect(top, left, width, height, color) {
