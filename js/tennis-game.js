@@ -13,12 +13,12 @@ let ballYSpeed = 4;
 // Paddle setup
 let PADDLE_WIDTH = 10;
 let PADDLE_HEIGHT = 100;
-
-// Player paddle
 let playerPaddleY = 250;
-
-// Comp paddle
 let compPaddleY = 250;
+
+// Scoreboard
+let playerScore = 0;
+let compScore = 0;
 
 window.onload = function() {
   canvas = document.getElementById('game');
@@ -44,6 +44,7 @@ function gameMechanics() {
   // Test if ball hits paddle or wall for computer
   if (ballX > canvas.width) {
       ballReset();
+      playerScore ++;
   } else if (ballY > compPaddleY &&
     ballY < compPaddleY + PADDLE_HEIGHT &&
     ballX == canvas.width - PADDLE_WIDTH) {
@@ -53,6 +54,7 @@ function gameMechanics() {
   // Test if ball hits paddle or wall for player
   if (ballX < 0) {
       ballReset();
+      compScore ++;
   } else if (ballY > playerPaddleY &&
     ballY < playerPaddleY + PADDLE_HEIGHT &&
     ballX == PADDLE_WIDTH) {
@@ -84,6 +86,11 @@ function drawGame() {
 
   // Draw comp paddle
   drawRect(canvas.width-10, compPaddleY, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
+
+  // Scoreboard
+  canvasContext.font = "30px Courier New";
+  canvasContext.fillText(playerScore, 200, 100);
+  canvasContext.fillText(compScore, canvas.width - 200, 100);
 }
 
 // Helper functions
