@@ -14,6 +14,10 @@ window.onload = function() {
 
 function drawGame() {
   // Canvas background
-  canvasContext.fillStyle = 'black';
-  canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+  drawRect(0, 0, canvas.width, canvas.height, 'black');
+}
+
+function drawRect(top, left, width, height, color) {
+  canvasContext.fillStyle = color;
+  canvasContext.fillRect(top, left, width, height);
 }
