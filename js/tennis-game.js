@@ -19,6 +19,8 @@ let compPaddleY = 250;
 // Scoreboard
 let playerScore = 0;
 let compScore = 0;
+const WINNING_SCORE = 3;
+let showStartScreen = true;
 
 window.onload = function() {
   canvas = document.getElementById('game');
@@ -32,9 +34,14 @@ window.onload = function() {
   }, 1000/frameRate);
 
   canvas.addEventListener('mousemove', playerPaddleFollowMouse);
+  canvas.addEventListener('mousedown', start);
 }
 
 function gameMechanics() {
+  if (showStartScreen) {
+      return;
+  }
+
   compPaddleMove();
 
   // Start the ball rolling
@@ -43,22 +50,28 @@ function gameMechanics() {
 
   // Test if ball hits paddle or wall for computer
   if (ballX > canvas.width) {
+      playerScore ++; // Must be before reset
       ballReset();
-      playerScore ++;
   } else if (ballY > compPaddleY &&
     ballY < compPaddleY + PADDLE_HEIGHT &&
     ballX == canvas.width - PADDLE_WIDTH) {
       ballXSpeed = -ballXSpeed;
+
+      let deltaY = ballY - (compPaddleY + PADDLE_HEIGHT/2);
+      ballYSpeed = deltaY * 0.35;
   }
 
   // Test if ball hits paddle or wall for player
   if (ballX < 0) {
+      compScore ++; // Must be before reset
       ballReset();
-      compScore ++;
   } else if (ballY > playerPaddleY &&
     ballY < playerPaddleY + PADDLE_HEIGHT &&
     ballX == PADDLE_WIDTH) {
       ballXSpeed = -ballXSpeed;
+
+      let deltaY = ballY - (playerPaddleY + PADDLE_HEIGHT/2);
+      ballYSpeed = deltaY * 0.35;
   }
 
   // Vertical bounce
@@ -72,6 +85,19 @@ function gameMechanics() {
 function drawGame() {
   // Canvas background
   drawRect(0, 0, canvas.width, canvas.height, 'rgb(40,40,40)');
+
+  if (showStartScreen) {
+    canvasContext.fillStyle = 'white';
+    canvasContext.font = '30px Courier New';
+    canvasContext.textAlign = 'center';
+    canvasContext.fillText('Click to Start', canvas.width/2, 500);
+    if (playerScore > 0) {
+      canvasContext.fillText('You won!', canvas.width/2, 200);
+    } else if (compScore > 0) {
+      canvasContext.fillText('Computer won!', canvas.width/2, 200);
+    }
+    return;
+  }
 
   // Draw net
   for (i = 0; i < canvas.height; i += 40) {
@@ -88,16 +114,30 @@ function drawGame() {
   drawRect(canvas.width-10, compPaddleY, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
 
   // Scoreboard
-  canvasContext.font = "30px Courier New";
+  canvasContext.font = '30px Courier New';
   canvasContext.fillText(playerScore, 200, 100);
   canvasContext.fillText(compScore, canvas.width - 200, 100);
 }
 
 // Helper functions
 
+// Start game
+function start(evt) {
+  if (showStartScreen) {
+    playerScore = 0;
+    compScore = 0;
+    showStartScreen = false;
+  }
+}
+
 // Reset the position of the ball when it hits vertical walls
 function ballReset() {
+  if (playerScore >= WINNING_SCORE ||
+      compScore >= WINNING_SCORE) {
+          showStartScreen = true;
+  }
   ballXSpeed = -ballXSpeed;
+  ballYSpeed = 4;
   ballX = canvas.width/2;
   ballY = canvas.height/2;
 }
