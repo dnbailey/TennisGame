@@ -87,7 +87,7 @@ function drawGame() {
   drawRect(0, 0, canvas.width, canvas.height, 'rgb(40,40,40)');
 
   if (showStartScreen) {
-    canvasContext.fillStyle = 'white';
+    canvasContext.fillStyle = 'rgb(51,255,0)';
     canvasContext.font = '30px Courier New';
     canvasContext.textAlign = 'center';
     canvasContext.fillText('Click to Start', canvas.width/2, 500);
@@ -101,17 +101,17 @@ function drawGame() {
 
   // Draw net
   for (i = 0; i < canvas.height; i += 40) {
-    drawRect(canvas.width / 2 - 1, i, 2, 20, 'white');
+    drawRect(canvas.width / 2 - 1, i, 2, 20, 'rgb(51,255,0)');
   };
 
   // Draw ball
   drawRect(ballX, ballY, 10, 10, 'rgb(51,255,0)');
 
   // Draw player paddle
-  drawRect(0, playerPaddleY, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
+  drawRect(0, playerPaddleY, PADDLE_WIDTH, PADDLE_HEIGHT, 'rgb(51,255,0)');
 
   // Draw comp paddle
-  drawRect(canvas.width-10, compPaddleY, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
+  drawRect(canvas.width-10, compPaddleY, PADDLE_WIDTH, PADDLE_HEIGHT, 'rgb(51,255,0)');
 
   // Scoreboard
   canvasContext.font = '30px Courier New';
