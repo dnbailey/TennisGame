@@ -35,16 +35,25 @@ window.onload = function() {
 }
 
 function gameMechanics() {
-
   compPaddleMove();
 
   ballX += ballXSpeed;
   ballY += ballYSpeed;
 
   if (ballX > canvas.width) {
-    ballXSpeed = -ballXSpeed;
-  } else if (ballX < 0) {
-    ballXSpeed = -ballXSpeed;
+    if (ballY > compPaddleY && ballY < compPaddleY + PADDLE_HEIGHT) {
+      ballXSpeed = -ballXSpeed;
+    } else {
+      ballReset();
+    }
+  }
+
+  if (ballX < 0) {
+    if (ballY > playerPaddleY && ballY < playerPaddleY + PADDLE_HEIGHT){
+      ballXSpeed = -ballXSpeed
+    } else {
+      ballReset();
+    }
   }
 
   if (ballY > canvas.height) {
@@ -75,13 +84,20 @@ function drawGame() {
 
 // Helper functions
 
+// Reset the position of the ball when it hits vertical walls
+function ballReset() {
+  ballXSpeed = -ballXSpeed;
+  ballX = canvas.width/2;
+  ballY = canvas.height/2;
+}
+
 // Create computer paddle movement
 function compPaddleMove() {
   let compPaddleYCenter = compPaddleY + PADDLE_HEIGHT/2;
-  if (compPaddleYCenter < ballY) {
-    compPaddleY += 5;
-  } else if (compPaddleY > ballY) {
-    compPaddleY -= 5;
+  if (compPaddleYCenter < ballY - 35) {
+    compPaddleY += 6;
+  } else if (compPaddleY > ballY - 35) {
+    compPaddleY -= 6;
   }
 }
 
