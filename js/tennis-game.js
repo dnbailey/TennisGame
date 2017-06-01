@@ -4,13 +4,13 @@
 let canvas;
 let canvasContext;
 
-// Ball Setup
+// Ball setup
 let ballX = 250;
 let ballXSpeed = 5;
 let ballY = 25;
 let ballYSpeed = 0;
 
-// Paddle Setup
+// Paddle setup
 let PADDLE_WIDTH = 10;
 let PADDLE_HEIGHT = 100;
 
@@ -28,7 +28,6 @@ window.onload = function() {
 
 function gameMechanics() {
   ballX += ballXSpeed;
-  console.log(ballX);
 }
 
 function drawGame() {
@@ -43,10 +42,10 @@ function drawGame() {
   // Draw ball
   drawRect(ballX, 250, 10, 10, 'rgb(51,255,0)');
 
-  // Draw Player Paddle
+  // Draw player paddle
   drawRect(0, 250, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
 
-  // Draw Comp Paddle
+  // Draw comp paddle
   drawRect(canvas.width-10, 250, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
 }
 
