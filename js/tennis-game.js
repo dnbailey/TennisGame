@@ -37,25 +37,29 @@ window.onload = function() {
 function gameMechanics() {
   compPaddleMove();
 
+  // Start the ball rolling
   ballX += ballXSpeed;
   ballY += ballYSpeed;
 
+  // Test if ball hits paddle or wall for computer
   if (ballX > canvas.width) {
-    if (ballY > compPaddleY && ballY < compPaddleY + PADDLE_HEIGHT) {
+      ballReset();
+  } else if (ballY > compPaddleY &&
+    ballY < compPaddleY + PADDLE_HEIGHT &&
+    ballX == canvas.width - PADDLE_WIDTH) {
       ballXSpeed = -ballXSpeed;
-    } else {
-      ballReset();
-    }
   }
 
+  // Test if ball hits paddle or wall for player
   if (ballX < 0) {
-    if (ballY > playerPaddleY && ballY < playerPaddleY + PADDLE_HEIGHT){
-      ballXSpeed = -ballXSpeed
-    } else {
       ballReset();
-    }
+  } else if (ballY > playerPaddleY &&
+    ballY < playerPaddleY + PADDLE_HEIGHT &&
+    ballX == PADDLE_WIDTH) {
+      ballXSpeed = -ballXSpeed;
   }
 
+  // Vertical bounce
   if (ballY > canvas.height) {
     ballYSpeed = -ballYSpeed;
   } else if (ballY < 0) {
