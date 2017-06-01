@@ -35,6 +35,9 @@ window.onload = function() {
 }
 
 function gameMechanics() {
+
+  compPaddleMove();
+
   ballX += ballXSpeed;
   ballY += ballYSpeed;
 
@@ -67,10 +70,20 @@ function drawGame() {
   drawRect(0, playerPaddleY, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
 
   // Draw comp paddle
-  drawRect(canvas.width-10, 250, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
+  drawRect(canvas.width-10, compPaddleY, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
 }
 
 // Helper functions
+
+// Create computer paddle movement
+function compPaddleMove() {
+  let compPaddleYCenter = compPaddleY + PADDLE_HEIGHT/2;
+  if (compPaddleYCenter < ballY) {
+    compPaddleY += 5;
+  } else if (compPaddleY > ballY) {
+    compPaddleY -= 5;
+  }
+}
 
 // Get mouse position relative to canvas size
 function playerPaddleFollowMouse(evt) {
