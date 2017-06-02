@@ -1,4 +1,11 @@
-// Tennis Game
+/*
+
+Tennis Game
+@dnbailey
+
+Based on the tutorials on Udemy by @gamkedo
+
+*/
 
 // Initiate canvas
 let canvas;
@@ -137,7 +144,7 @@ function ballReset() {
           showStartScreen = true;
   }
   ballXSpeed = -ballXSpeed;
-  ballYSpeed = 4;
+  ballYSpeed = 4; // Needed to reset the inertia
   ballX = canvas.width/2;
   ballY = canvas.height/2;
 }
